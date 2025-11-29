@@ -82,6 +82,11 @@ public class Fireplace extends Sketch {
         feedbackLabel.setText(message);
     }
 
+    private void setCommandLinePlaceholder() {
+        commandLine.setForeground(java.awt.Color.GRAY);
+        commandLine.setText("Type a command, then press ENTER (UP / DOWN ARROWS to see history)");
+    }
+
     private void parseCommand(String format) {
         boolean success = true;
                 
@@ -296,13 +301,11 @@ public class Fireplace extends Sketch {
         // command input text field
         commandLine = new TextField(MAX_CHARS);
         // command line placeholder text
-        commandLine.setForeground(java.awt.Color.GRAY);
-        commandLine.setText("Type a command, then press ENTER");
+        setCommandLinePlaceholder();
         commandLine.addFocusListener(new FocusListener() {
             @Override
             public void focusLost(FocusEvent e) {
-                commandLine.setForeground(java.awt.Color.GRAY);
-                commandLine.setText("Type a command, then press ENTER");
+                setCommandLinePlaceholder();
             }
             @Override
             public void focusGained(FocusEvent arg0) {
