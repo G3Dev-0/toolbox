@@ -13,15 +13,16 @@ import toolbox.Input;
 import toolbox.Sketch;
 import toolbox.gfx.Color;
 import toolbox.math.Maths;
+import toolbox.utils.Console;
 
 public class Fireplace extends Sketch {
-
-    // window size
-    private static final int SIZE = 50;
     
     // ui constants (up to 50 commands are saved)
     private final int COMMANDS_HISTORY_LENGTH = 50;
-    
+
+    // window size
+    private static int SIZE = 50;
+
     // simulation parameters
     private float updatePercentage = 0.4f; // the bigger the faster and more laggy the animation will look. It's the chances of a pixel being updated (ranged [0, 1])
     private int maxTemperature = 50; // the bigger the higher and the more colors the flame can have
@@ -34,7 +35,7 @@ public class Fireplace extends Sketch {
     private int paint = maxTemperature; // flame brush paint (>= 0)
 
     // grid
-    private int[][] grid = new int[SIZE][SIZE];
+    private int[][] grid;
 
     // iteration variables
     private int i, x, y;
@@ -349,7 +350,10 @@ public class Fireplace extends Sketch {
 
     @Override
     public void setup() {
-        // sets all cells to 0 degrees
+        // create the grid
+        grid = new int[SIZE][SIZE];
+
+        // sets all cells to temperature 0
         for (y = 0; y < SIZE; y++) {
             for (x = 0; x < SIZE; x++) {
                 grid[y][x] = 0;
@@ -447,6 +451,10 @@ public class Fireplace extends Sketch {
     }
 
     public static void main(String[] args) {
-        new Fireplace().createCanvas("Fireplace", SIZE, SIZE, 10);
+        Console.info("Run me with the \"-h\" argument to use high resolution rendering (there might be some lag)");
+        boolean highResolution = false;
+        if (args.length == 1) highResolution = args[0].strip().equals("-h");
+        SIZE = 500 / (highResolution ? 1 : 10);
+        new Fireplace().createCanvas("Fireplace", SIZE, SIZE, highResolution ? 1 : 10);
     }
 }
