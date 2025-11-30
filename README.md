@@ -63,3 +63,4 @@ You can find a sketch template [**here**](https://github.com/G3Dev-0/toolbox/blo
 + Improve sounds implementation
 + Don't support
 + Document the whole code
++ Add compilation instructions to this README file
